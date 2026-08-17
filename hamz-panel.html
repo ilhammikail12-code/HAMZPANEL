@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hamz Panel — Panel Pterodactyl Premium & Legal</title>
+<meta name="description" content="Panel Pterodactyl premium dengan harga terjangkau, server Indonesia, NVMe high speed, dan masa aktif 30 hari.">
+<meta property="og:title" content="Hamz Panel — Panel Pterodactyl Premium & Legal">
+<meta property="og:description" content="Panel Pterodactyl premium dengan harga terjangkau, server Indonesia, NVMe high speed, dan masa aktif 30 hari.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#05070d;
+    --bg-1:#080b14;
+    --bg-2:#0d1220;
+    --panel:#0f1526;
+    --panel-brd:rgba(120,170,255,0.14);
+    --cyan:#3fd8ff;
+    --cyan-2:#7ff4ff;
+    --purple:#8c6bff;
+    --purple-2:#b98cff;
+    --green:#3ef2a0;
+    --text-0:#eef3fb;
+    --text-1:#aab6cc;
+    --text-2:#6d7891;
+    --mono:'JetBrains Mono', monospace;
+    --disp:'Space Grotesk', sans-serif;
+    --body:'Inter', sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg-0);
+    color:var(--text-0);
+    font-family:var(--body);
+    overflow-x:hidden;
+    line-height:1.5;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+  }
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;}
+  ::selection{background:rgba(63,216,255,0.3);color:#fff;}
+
+  /* ---------- background layers ---------- */
+  .bg-fixed{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(ellipse 900px 600px at 12% -5%, rgba(140,107,255,0.16), transparent 60%),
+      radial-gradient(ellipse 900px 700px at 90% 10%, rgba(63,216,255,0.14), transparent 60%),
+      radial-gradient(ellipse 1200px 800px at 50% 100%, rgba(63,216,255,0.06), transparent 60%),
+      linear-gradient(180deg, var(--bg-0), var(--bg-1) 40%, var(--bg-0));
+  }
+  .bg-grid{
+    position:fixed; inset:0; z-index:0; pointer-events:none; opacity:0.35;
+    background-image:
+      linear-gradient(rgba(120,170,255,0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(120,170,255,0.055) 1px, transparent 1px);
+    background-size:42px 42px;
+    -webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 90%);
+            mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 90%);
+    animation:gridDrift 26s linear infinite;
+  }
+  @keyframes gridDrift{ from{background-position:0 0,0 0;} to{background-position:42px 42px,42px 42px;} }
+
+  #particles{position:fixed; inset:0; z-index:0; pointer-events:none;}
+  #particles span{
+    position:absolute; width:2px; height:2px; border-radius:50%;
+    background:var(--cyan-2); opacity:0.5;
+    box-shadow:0 0 6px 1px rgba(63,216,255,0.6);
+    animation:floatUp linear infinite;
+  }
+  @keyframes floatUp{
+    from{ transform:translateY(0) translateX(0); opacity:0; }
+    10%{ opacity:0.6; }
+    90%{ opacity:0.4; }
+    to{ transform:translateY(-110vh) translateX(20px); opacity:0; }
+  }
+
+  .container{max-width:1180px; margin:0 auto; padding:0 24px; position:relative; z-index:1;}
+  section{position:relative; z-index:1;}
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  /* ---------- navbar ---------- */
+  header.nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    padding:18px 0;
+    transition:background .35s ease, backdrop-filter .35s ease, padding .35s ease, border-color .35s ease;
+    border-bottom:1px solid transparent;
+  }
+  header.nav.scrolled{
+    background:rgba(6,9,16,0.72);
+    backdrop-filter:blur(16px) saturate(140%);
+    -webkit-backdrop-filter:blur(16px) saturate(140%);
+    border-bottom:1px solid var(--panel-brd);
+    padding:12px 0;
+  }
+  .nav-inner{display:flex; align-items:center; justify-content:space-between; gap:20px;}
+  .logo{
+    display:flex; align-items:center; gap:10px;
+    font-family:var(--disp); font-weight:700; font-size:1.05rem; letter-spacing:0.02em;
+  }
+  .logo-mark{
+    width:34px; height:34px; border-radius:9px;
+    background:linear-gradient(135deg, var(--cyan), var(--purple));
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 0 18px rgba(63,216,255,0.45);
+    font-family:var(--mono); font-size:0.75rem; color:#04070d; font-weight:700;
+  }
+  .logo span.accent{
+    background:linear-gradient(90deg, var(--cyan-2), var(--purple-2));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  nav.menu{display:flex; align-items:center; gap:30px;}
+  nav.menu a{
+    font-size:0.88rem; color:var(--text-1); font-weight:500;
+    position:relative; padding:6px 0; transition:color .25s ease;
+  }
+  nav.menu a::after{
+    content:''; position:absolute; left:0; bottom:0; width:0%; height:1px;
+    background:linear-gradient(90deg, var(--cyan), var(--purple));
+    transition:width .25s ease;
+  }
+  nav.menu a:hover{color:var(--text-0);}
+  nav.menu a:hover::after{width:100%;}
+  .nav-actions{display:flex; align-items:center; gap:14px;}
+  .burger{display:none; flex-direction:column; gap:5px; cursor:pointer; z-index:60;}
+  .burger span{width:22px; height:2px; background:var(--text-0); border-radius:2px; transition:.3s;}
+
+  /* ---------- buttons ---------- */
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    font-family:var(--body); font-weight:600; font-size:0.9rem;
+    padding:13px 26px; border-radius:11px; cursor:pointer; border:1px solid transparent;
+    transition:transform .25s ease, box-shadow .25s ease, background .25s ease, border-color .25s ease;
+    white-space:nowrap;
+  }
+  .btn:active{transform:scale(0.97);}
+  .btn-primary{
+    background:linear-gradient(135deg, var(--cyan), var(--purple));
+    color:#040711;
+    box-shadow:0 0 0 rgba(63,216,255,0);
+  }
+  .btn-primary:hover{
+    box-shadow:0 8px 30px -6px rgba(63,216,255,0.55), 0 0 24px rgba(140,107,255,0.35);
+    transform:translateY(-2px);
+  }
+  .btn-ghost{
+    background:rgba(255,255,255,0.02);
+    border:1px solid var(--panel-brd);
+    color:var(--text-0);
+    backdrop-filter:blur(6px);
+  }
+  .btn-ghost:hover{border-color:rgba(63,216,255,0.5); background:rgba(63,216,255,0.06); transform:translateY(-2px);}
+  .btn-sm{padding:9px 16px; font-size:0.82rem; border-radius:9px;}
+  .btn-block{width:100%;}
+  .btn-wa{background:linear-gradient(135deg,#22e0a0,#1aa876); color:#03150e;}
+  .btn-wa:hover{box-shadow:0 8px 28px -6px rgba(34,224,160,0.5); transform:translateY(-2px);}
+  .btn-tg{background:linear-gradient(135deg,#3fc4ff,#2a8fe0); color:#03121e;}
+  .btn-tg:hover{box-shadow:0 8px 28px -6px rgba(63,196,255,0.5); transform:translateY(-2px);}
+
+  /* ---------- hero ---------- */
+  .hero{padding:168px 0 110px; position:relative;}
+  .badge{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--mono); font-size:0.72rem; letter-spacing:0.04em;
+    padding:8px 16px; border-radius:999px;
+    border:1px solid rgba(63,216,255,0.35);
+    background:rgba(63,216,255,0.06);
+    color:var(--cyan-2);
+    margin-bottom:26px;
+  }
+  .badge .dot{width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow:0 0 8px var(--green); animation:pulse 1.6s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1; transform:scale(1);} 50%{opacity:0.4; transform:scale(0.7);}}
+
+  .hero-grid{display:grid; grid-template-columns:1.05fr 0.95fr; gap:60px; align-items:center;}
+  .hero h1{
+    font-family:var(--disp); font-weight:700; letter-spacing:-0.02em;
+    font-size:clamp(2.3rem, 4.6vw, 3.7rem); line-height:1.06;
+    margin-bottom:22px;
+  }
+  .hero h1 .grad{
+    background:linear-gradient(100deg, var(--cyan-2), var(--purple-2) 60%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero p.sub{color:var(--text-1); font-size:1.05rem; max-width:520px; margin-bottom:36px;}
+  .hero-cta{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:44px;}
+  .hero-status{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:var(--mono); font-size:0.78rem; color:var(--green);
+    padding:9px 14px; border-radius:9px; border:1px solid rgba(62,242,160,0.25); background:rgba(62,242,160,0.05);
+  }
+  .hero-status .led{width:8px; height:8px; border-radius:50%; background:var(--green); box-shadow:0 0 10px var(--green); animation:pulse 1.4s ease-in-out infinite;}
+
+  /* hero visual: server core */
+  .hero-visual{position:relative; height:440px; display:flex; align-items:center; justify-content:center;}
+  .core-ring{
+    position:absolute; border-radius:50%; border:1px solid rgba(63,216,255,0.18);
+  }
+  .core-ring.r1{width:420px; height:420px; animation:spin 34s linear infinite;}
+  .core-ring.r2{width:320px; height:320px; border-color:rgba(140,107,255,0.2); animation:spin 24s linear infinite reverse;}
+  .core-ring.r3{width:220px; height:220px; border-style:dashed; border-color:rgba(63,216,255,0.28); animation:spin 40s linear infinite;}
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  .core-ring i{
+    position:absolute; width:8px; height:8px; border-radius:50%;
+    background:var(--cyan-2); box-shadow:0 0 12px var(--cyan-2);
+    top:-4px; left:50%; margin-left:-4px;
+  }
+  .core-panel{
+    position:relative; width:230px; height:230px; border-radius:26px;
+    background:linear-gradient(160deg, rgba(15,21,38,0.9), rgba(8,11,20,0.9));
+    border:1px solid var(--panel-brd);
+    box-shadow:0 0 60px rgba(63,216,255,0.18), inset 0 0 40px rgba(140,107,255,0.06);
+    display:flex; align-items:center; justify-content:center; flex-direction:column; gap:6px;
+    backdrop-filter:blur(10px);
+  }
+  .core-panel .glyph{
+    width:56px; height:56px; border-radius:14px;
+    background:linear-gradient(135deg, var(--cyan), var(--purple));
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 0 30px rgba(63,216,255,0.5);
+    margin-bottom:10px;
+  }
+  .core-panel .glyph svg{width:28px; height:28px;}
+  .core-panel .pct{font-family:var(--mono); font-size:0.72rem; color:var(--text-2);}
+  .core-panel .pct b{color:var(--cyan-2);}
+
+  /* ---------- section headers ---------- */
+  .eyebrow{
+    font-family:var(--mono); font-size:0.74rem; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--purple-2); margin-bottom:14px; display:block;
+  }
+  .sec-head{max-width:640px; margin-bottom:52px;}
+  .sec-head h2{
+    font-family:var(--disp); font-weight:700; font-size:clamp(1.7rem, 3vw, 2.5rem); letter-spacing:-0.01em; margin-bottom:14px;
+  }
+  .sec-head p{color:var(--text-1); font-size:1rem;}
+  section.pad{padding:100px 0;}
+
+  /* ---------- stats ---------- */
+  .stats-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px;}
+  .stat-card{
+    padding:30px 22px; border-radius:16px; border:1px solid var(--panel-brd);
+    background:linear-gradient(160deg, rgba(255,255,255,0.025), rgba(255,255,255,0));
+    text-align:center; transition:transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+  }
+  .stat-card:hover{transform:translateY(-6px); border-color:rgba(63,216,255,0.4); box-shadow:0 16px 40px -14px rgba(63,216,255,0.3);}
+  .stat-num{
+    font-family:var(--disp); font-weight:700; font-size:2.1rem;
+    background:linear-gradient(90deg, var(--cyan-2), var(--purple-2));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .stat-label{font-size:0.8rem; color:var(--text-2); margin-top:8px; font-family:var(--mono); letter-spacing:0.03em;}
+
+  /* ---------- spec grid ---------- */
+  .spec-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px;}
+  .spec-card{
+    padding:22px 20px; border-radius:14px; border:1px solid var(--panel-brd);
+    background:rgba(255,255,255,0.02);
+    transition:transform .3s ease, border-color .3s ease, background .3s ease;
+  }
+  .spec-card:hover{transform:translateY(-4px); border-color:rgba(140,107,255,0.4); background:rgba(140,107,255,0.05);}
+  .spec-icon{
+    width:38px; height:38px; border-radius:10px; margin-bottom:14px;
+    background:rgba(63,216,255,0.08); border:1px solid rgba(63,216,255,0.22);
+    display:flex; align-items:center; justify-content:center; color:var(--cyan-2); font-size:1rem;
+  }
+  .spec-card h4{font-size:0.86rem; font-weight:600; margin-bottom:4px; color:var(--text-0);}
+  .spec-card p{font-size:0.78rem; color:var(--text-2); font-family:var(--mono);}
+  .spec-note{
+    margin-top:34px; padding:16px 20px; border-radius:12px;
+    border:1px solid rgba(62,242,160,0.25); background:rgba(62,242,160,0.05);
+    font-size:0.85rem; color:#a9f5d4; display:flex; gap:10px; align-items:flex-start;
+  }
+
+  /* ---------- pricing ---------- */
+  .price-scroller{
+    display:grid; grid-auto-flow:column; grid-auto-columns:250px; gap:18px;
+    overflow-x:auto; padding:10px 4px 26px; scroll-snap-type:x proximity;
+  }
+  .price-scroller::-webkit-scrollbar{height:6px;}
+  .price-scroller::-webkit-scrollbar-thumb{background:var(--panel-brd); border-radius:6px;}
+  .price-card{
+    scroll-snap-align:start;
+    padding:26px 22px; border-radius:18px; border:1px solid var(--panel-brd);
+    background:linear-gradient(165deg, rgba(255,255,255,0.03), rgba(255,255,255,0));
+    display:flex; flex-direction:column; gap:14px;
+    transition:transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+  }
+  .price-card:hover{transform:translateY(-8px); border-color:rgba(63,216,255,0.45); box-shadow:0 20px 44px -16px rgba(63,216,255,0.35);}
+  .price-card .ram{font-family:var(--disp); font-weight:700; font-size:1.3rem;}
+  .price-card .amount{font-family:var(--disp); font-weight:700; font-size:1.7rem; color:var(--cyan-2);}
+  .price-card .amount span{font-size:0.75rem; color:var(--text-2); font-weight:400; font-family:var(--body);}
+  .price-card ul{list-style:none; display:flex; flex-direction:column; gap:7px; font-size:0.78rem; color:var(--text-1);}
+  .price-card ul li{display:flex; align-items:center; gap:7px;}
+  .price-card ul li::before{content:'✓'; color:var(--green); font-weight:700;}
+  .price-card.featured{
+    border:1px solid rgba(63,216,255,0.55);
+    background:linear-gradient(165deg, rgba(63,216,255,0.1), rgba(140,107,255,0.06));
+    box-shadow:0 0 50px -10px rgba(63,216,255,0.35);
+    position:relative;
+  }
+  .price-card.featured::before{
+    content:'🔥 BEST VALUE';
+    position:absolute; top:-13px; left:50%; transform:translateX(-50%);
+    font-family:var(--mono); font-size:0.66rem; letter-spacing:0.03em;
+    padding:5px 14px; border-radius:999px;
+    background:linear-gradient(90deg, var(--cyan), var(--purple)); color:#04060f; font-weight:700;
+  }
+
+  /* ---------- reseller ---------- */
+  .reseller-card{
+    position:relative; border-radius:26px; padding:56px 48px;
+    background:radial-gradient(ellipse at top left, rgba(140,107,255,0.16), transparent 60%), linear-gradient(165deg, rgba(15,21,38,0.9), rgba(8,11,20,0.95));
+    border:1px solid rgba(140,107,255,0.4);
+    box-shadow:0 0 80px -20px rgba(140,107,255,0.4);
+    overflow:hidden;
+    display:grid; grid-template-columns:1fr auto; gap:40px; align-items:center;
+  }
+  .reseller-card::before{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(120deg, transparent 30%, rgba(63,216,255,0.06) 50%, transparent 70%);
+    background-size:220% 220%; animation:shine 6s ease-in-out infinite;
+  }
+  @keyframes shine{0%{background-position:0% 0%;} 50%{background-position:100% 100%;} 100%{background-position:0% 0%;}}
+  .reseller-card h3{font-family:var(--disp); font-size:1.9rem; font-weight:700; margin-bottom:10px; position:relative;}
+  .reseller-card p{color:var(--text-1); max-width:440px; position:relative; margin-bottom:10px; font-size:0.95rem;}
+  .reseller-price{position:relative; text-align:center;}
+  .reseller-price .big{font-family:var(--disp); font-weight:700; font-size:2.6rem; color:var(--purple-2);}
+  .reseller-price .note{font-family:var(--mono); font-size:0.78rem; color:var(--cyan-2); margin:6px 0 20px;}
+
+  /* ---------- security ---------- */
+  .sec-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px;}
+  .sec-item{
+    padding:24px 18px; border-radius:14px; border:1px solid var(--panel-brd); background:rgba(255,255,255,0.02);
+    text-align:center; transition:transform .3s ease, border-color .3s ease;
+  }
+  .sec-item:hover{transform:translateY(-5px) scale(1.02); border-color:rgba(63,216,255,0.4);}
+  .sec-item .ico{font-size:1.5rem; margin-bottom:10px;}
+  .sec-item h4{font-size:0.82rem; font-weight:600;}
+
+  /* ---------- panel mockup ---------- */
+  .panel-wrap{display:grid; grid-template-columns:0.9fr 1.1fr; gap:60px; align-items:center;}
+  .mockup{
+    border-radius:18px; border:1px solid var(--panel-brd); overflow:hidden;
+    background:linear-gradient(165deg, rgba(15,21,38,0.95), rgba(8,11,20,0.95));
+    box-shadow:0 30px 70px -20px rgba(0,0,0,0.6), 0 0 50px -12px rgba(63,216,255,0.2);
+  }
+  .mockup-bar{display:flex; align-items:center; gap:6px; padding:12px 16px; border-bottom:1px solid var(--panel-brd);}
+  .mockup-bar i{width:9px; height:9px; border-radius:50%; background:#3a4256;}
+  .mockup-body{padding:20px; display:grid; grid-template-columns:90px 1fr; gap:16px;}
+  .mockup-side{display:flex; flex-direction:column; gap:10px;}
+  .mockup-side .s{height:9px; border-radius:4px; background:rgba(255,255,255,0.06);}
+  .mockup-side .s.active{background:linear-gradient(90deg, var(--cyan), var(--purple)); box-shadow:0 0 10px rgba(63,216,255,0.4);}
+  .mockup-main{display:flex; flex-direction:column; gap:12px;}
+  .mockup-row{display:grid; grid-template-columns:repeat(3,1fr); gap:10px;}
+  .mockup-tile{
+    border-radius:10px; border:1px solid var(--panel-brd); padding:12px; background:rgba(255,255,255,0.02);
+  }
+  .mockup-tile .bar{height:6px; border-radius:4px; background:rgba(255,255,255,0.08); margin-bottom:8px;}
+  .mockup-tile .val{font-family:var(--mono); font-size:0.68rem; color:var(--cyan-2);}
+  .mockup-graph{height:70px; border-radius:10px; border:1px solid var(--panel-brd); position:relative; overflow:hidden; background:rgba(255,255,255,0.02);}
+  .mockup-graph svg{position:absolute; inset:0; width:100%; height:100%;}
+
+  /* ---------- promo ---------- */
+  .promo{
+    border-radius:24px; padding:48px; text-align:center; position:relative; overflow:hidden;
+    background:linear-gradient(120deg, rgba(63,216,255,0.14), rgba(140,107,255,0.14));
+    border:1px solid rgba(63,216,255,0.35);
+  }
+  .promo h3{font-family:var(--disp); font-size:1.8rem; font-weight:700; margin-bottom:10px;}
+  .promo p{color:var(--text-1); margin-bottom:26px;}
+  .countdown{display:flex; gap:14px; justify-content:center; flex-wrap:wrap;}
+  .cd-box{
+    width:78px; padding:14px 0; border-radius:12px; border:1px solid var(--panel-brd);
+    background:rgba(5,7,13,0.6); backdrop-filter:blur(6px);
+  }
+  .cd-box .n{font-family:var(--disp); font-weight:700; font-size:1.5rem; color:var(--cyan-2);}
+  .cd-box .l{font-family:var(--mono); font-size:0.62rem; color:var(--text-2); text-transform:uppercase; margin-top:4px;}
+
+  /* ---------- order ---------- */
+  .order-box{
+    text-align:center; padding:70px 24px; border-radius:26px; position:relative; overflow:hidden;
+    border:1px solid var(--panel-brd);
+    background:radial-gradient(ellipse at 50% 0%, rgba(63,216,255,0.14), transparent 65%), var(--panel);
+  }
+  .order-box h2{font-family:var(--disp); font-size:clamp(1.8rem,3.4vw,2.6rem); font-weight:700; margin-bottom:14px;}
+  .order-box p{color:var(--text-1); margin-bottom:34px; max-width:480px; margin-left:auto; margin-right:auto;}
+  .order-actions{display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
+
+  /* ---------- footer ---------- */
+  footer{border-top:1px solid var(--panel-brd); padding:50px 0 30px;}
+  .foot-inner{display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:24px; margin-bottom:30px;}
+  .foot-menu{display:flex; gap:24px; flex-wrap:wrap;}
+  .foot-menu a{font-size:0.85rem; color:var(--text-1); transition:color .2s ease;}
+  .foot-menu a:hover{color:var(--cyan-2);}
+  .foot-bottom{border-top:1px solid var(--panel-brd); padding-top:22px; font-size:0.78rem; color:var(--text-2); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:980px){
+    .hero-grid{grid-template-columns:1fr; text-align:center;}
+    .hero p.sub{margin-left:auto; margin-right:auto;}
+    .hero-cta{justify-content:center;}
+    .hero-status{margin:0 auto;}
+    .hero-visual{height:340px; order:-1;}
+    .stats-grid{grid-template-columns:repeat(2,1fr);}
+    .spec-grid{grid-template-columns:repeat(2,1fr);}
+    .sec-grid{grid-template-columns:repeat(2,1fr);}
+    .panel-wrap{grid-template-columns:1fr;}
+    .reseller-card{grid-template-columns:1fr; text-align:center; padding:40px 28px;}
+    .reseller-card p{margin-left:auto; margin-right:auto;}
+  }
+  @media (max-width:720px){
+    nav.menu{
+      position:fixed; top:0; right:0; height:100vh; width:74%; max-width:300px;
+      background:rgba(6,9,16,0.97); backdrop-filter:blur(20px);
+      flex-direction:column; align-items:flex-start; justify-content:center; gap:26px;
+      padding:40px; transform:translateX(100%); transition:transform .35s ease;
+      border-left:1px solid var(--panel-brd);
+    }
+    nav.menu.open{transform:translateX(0);}
+    .burger{display:flex;}
+    .nav-actions .btn-primary.btn-sm{display:none;}
+    .stats-grid{grid-template-columns:1fr 1fr;}
+    .spec-grid{grid-template-columns:1fr 1fr;}
+    .sec-grid{grid-template-columns:1fr 1fr;}
+    section.pad{padding:70px 0;}
+    .promo{padding:34px 20px;}
+    .order-box{padding:50px 18px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-fixed"></div>
+<div class="bg-grid"></div>
+<div id="particles"></div>
+
+<header class="nav" id="navbar">
+  <div class="container nav-inner">
+    <a href="#home" class="logo">
+      <span class="logo-mark">HP</span>
+      HAMZ <span class="accent">PANEL</span>
+    </a>
+    <nav class="menu" id="menu">
+      <a href="#home">Home</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#spesifikasi">Spesifikasi</a>
+      <a href="#reseller">Reseller</a>
+      <a href="#security">Security</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="#pricing" class="btn btn-primary btn-sm">ORDER NOW</a>
+      <div class="burger" id="burger"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section id="home" class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="badge"><span class="dot"></span>SERVER READY • 30 DAYS ACTIVE</span>
+        <h1>Panel Pterodactyl<br><span class="grad">Premium & Legal</span></h1>
+        <p class="sub">Panel server powerful, stabil, dan siap digunakan untuk kebutuhan bot, website, game server, dan berbagai project kamu.</p>
+        <div class="hero-cta">
+          <a href="#pricing" class="btn btn-primary">🚀 ORDER SEKARANG</a>
+          <a href="#spesifikasi" class="btn btn-ghost">⚙️ LIHAT SPESIFIKASI</a>
+        </div>
+        <div class="hero-status"><span class="led"></span>SERVER ONLINE</div>
+      </div>
+      <div class="hero-visual">
+        <div class="core-ring r1"><i></i></div>
+        <div class="core-ring r2"><i style="background:var(--purple-2); box-shadow:0 0 12px var(--purple-2);"></i></div>
+        <div class="core-ring r3"></div>
+        <div class="core-panel">
+          <div class="glyph">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#04070d" stroke-width="2"><rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/><circle cx="7" cy="7" r="0.8" fill="#04070d"/><circle cx="7" cy="17" r="0.8" fill="#04070d"/></svg>
+          </div>
+          <div class="pct">UPTIME <b>99.9%</b></div>
+          <div class="pct">LATENCY <b>&lt;10ms</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="pad reveal">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-num" data-count="64" data-suffix=" GB">0</div><div class="stat-label">RAM</div></div>
+        <div class="stat-card"><div class="stat-num" data-count="32">0</div><div class="stat-label">CPU CORES</div></div>
+        <div class="stat-card"><div class="stat-num" data-count="250" data-suffix=" GB+">0</div><div class="stat-label">NVMe STORAGE</div></div>
+        <div class="stat-card"><div class="stat-num" data-static="JKT">JKT</div><div class="stat-label">JAKARTA, INDONESIA</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPESIFIKASI -->
+  <section id="spesifikasi" class="pad">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow">// Infrastructure</span>
+        <h2>Spesifikasi Infrastruktur</h2>
+        <p>Ditenagai hardware enterprise-grade dengan virtualisasi VMware dan region Jakarta untuk latensi rendah.</p>
+      </div>
+      <div class="spec-grid reveal">
+        <div class="spec-card"><div class="spec-icon">🧠</div><h4>Processor</h4><p>Xeon Gold 6133 @ 2.50GHz</p></div>
+        <div class="spec-card"><div class="spec-icon">⚙️</div><h4>CPU Cores</h4><p>32 Core</p></div>
+        <div class="spec-card"><div class="spec-icon">💾</div><h4>RAM</h4><p>64 GB</p></div>
+        <div class="spec-card"><div class="spec-icon">⚡</div><h4>Storage</h4><p>250 GB+ NVMe SSD</p></div>
+        <div class="spec-card"><div class="spec-icon">☁️</div><h4>Virtualization</h4><p>VMware</p></div>
+        <div class="spec-card"><div class="spec-icon">🌐</div><h4>Region</h4><p>Jakarta, Indonesia</p></div>
+        <div class="spec-card"><div class="spec-icon">🐧</div><h4>OS</h4><p>Ubuntu 22.04.4 LTS</p></div>
+        <div class="spec-card"><div class="spec-icon">🔧</div><h4>Architecture</h4><p>x86_64 (64 Bit)</p></div>
+        <div class="spec-card"><div class="spec-icon">📡</div><h4>TCP Congestion</h4><p>CUBIC</p></div>
+        <div class="spec-card"><div class="spec-icon">🔐</div><h4>AES-NI</h4><p>Enabled</p></div>
+        <div class="spec-card"><div class="spec-icon">✅</div><h4>VM-x / AMD-V</h4><p>Enabled</p></div>
+        <div class="spec-card"><div class="spec-icon">🛡️</div><h4>DDoS Protection</h4><p>Active</p></div>
+        <div class="spec-card"><div class="spec-icon">🧩</div><h4>Intelligent Protection</h4><p>Enabled</p></div>
+        <div class="spec-card"><div class="spec-icon">🎛️</div><h4>Pterodactyl Panel</h4><p>Official</p></div>
+        <div class="spec-card"><div class="spec-icon">🔒</div><h4>Private Server</h4><p>Dedicated</p></div>
+        <div class="spec-card"><div class="spec-icon">👤</div><h4>Admin</h4><p>1 User Admin Panel</p></div>
+      </div>
+      <div class="spec-note reveal">🛈 Server menggunakan VPS yang diklaim legal dan terdaftar resmi di Indonesia, bukan VPS trial/bajakan.</div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" class="pad">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow">// Pricing</span>
+        <h2>💎 Harga Panel</h2>
+        <p>Panel aktif selama 30 hari penuh.</p>
+      </div>
+      <div class="price-scroller reveal">
+        <div class="price-card">
+          <div class="ram">1 GB</div>
+          <div class="amount">Rp2.000</div>
+          <ul><li>Masa aktif 30 Hari</li><li>Shared CPU</li><li>Storage NVMe</li><li>Panel Pterodactyl</li></ul>
+          <a href="#contact" class="btn btn-ghost btn-block btn-sm">ORDER</a>
+        </div>
+        <div class="price-card">
+          <div class="ram">2 GB</div>
+          <div class="amount">Rp4.000</div>
+          <ul><li>Masa aktif 30 Hari</li><li>Shared CPU</li><li>Storage NVMe</li><li>Panel Pterodactyl</li></ul>
+          <a href="#contact" class="btn btn-ghost btn-block btn-sm">ORDER</a>
+        </div>
+        <div class="price-card">
+          <div class="ram">3 GB</div>
+          <div class="amount">Rp5.000</div>
+          <ul><li>Masa aktif 30 Hari</li><li>Shared CPU</li><li>Storage NVMe</li><li>Panel Pterodactyl</li></ul>
+          <a href="#contact" class="btn btn-ghost btn-block btn-sm">ORDER</a>
+        </div>
+        <div class="price-card">
+          <div class="ram">4 GB</div>
+          <div class="amount">Rp7.000</div>
+          <ul><li>Masa aktif 30 Hari</li><li>Shared CPU</li><li>Storage NVMe</li><li>Panel Pterodactyl</li></ul>
+          <a href="#contact" class="btn btn-ghost btn-block btn-sm">ORDER</a>
+        </div>
+        <div class="price-card">
+          <div class="ram">5 GB</div>
+          <div class="amount">Rp8.000</div>
+          <ul><li>Masa aktif 30 Hari</li><li>Shared CPU</li><li>Storage NVMe</li><li>Panel Pterodactyl</li></ul>
+          <a href="#contact" class="btn btn-ghost btn-block btn-sm">ORDER</a>
+        </div>
+        <div class="price-card">
+          <div class="ram">6 GB</div>
+          <div class="amount">Rp10.000</div>
+          <ul><li>Masa aktif 30 Hari</li><li>Shared CPU</li><li>Storage NVMe</li><li>Panel Pterodactyl</li></ul>
+          <a href="#contact" class="btn btn-ghost btn-block btn-sm">ORDER</a>
+        </div>
+        <div class="price-card">
+          <div class="ram">7 GB</div>
+          <div class="amount">Rp12.000</div>
+          <ul><li>Masa aktif 30 Hari</li><li>Shared CPU</li><li>Storage NVMe</li><li>Panel Pterodactyl</li></ul>
+          <a href="#contact" class="btn btn-ghost btn-block btn-sm">ORDER</a>
+        </div>
+        <div class="price-card">
+          <div class="ram">8 GB</div>
+          <div class="amount">Rp15.000</div>
+          <ul><li>Masa aktif 30 Hari</li><li>Shared CPU</li><li>Storage NVMe</li><li>Panel Pterodactyl</li></ul>
+          <a href="#contact" class="btn btn-ghost btn-block btn-sm">ORDER</a>
+        </div>
+        <div class="price-card">
+          <div class="ram">9 GB</div>
+          <div class="amount">Rp18.000</div>
+          <ul><li>Masa aktif 30 Hari</li><li>Shared CPU</li><li>Storage NVMe</li><li>Panel Pterodactyl</li></ul>
+          <a href="#contact" class="btn btn-ghost btn-block btn-sm">ORDER</a>
+        </div>
+        <div class="price-card">
+          <div class="ram">10 GB</div>
+          <div class="amount">Rp20.000</div>
+          <ul><li>Masa aktif 30 Hari</li><li>Shared CPU</li><li>Storage NVMe</li><li>Panel Pterodactyl</li></ul>
+          <a href="#contact" class="btn btn-ghost btn-block btn-sm">ORDER</a>
+        </div>
+        <div class="price-card featured">
+          <div class="ram">Unlimited</div>
+          <div class="amount">Rp25.000</div>
+          <ul><li>Masa aktif 30 Hari</li><li>Full CPU Allocation</li><li>Storage NVMe</li><li>Panel Pterodactyl</li></ul>
+          <a href="#contact" class="btn btn-primary btn-block btn-sm">ORDER</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESELLER -->
+  <section id="reseller" class="pad">
+    <div class="container">
+      <div class="reseller-card reveal">
+        <div>
+          <span class="eyebrow" style="color:var(--cyan-2);">👑 Reseller Program</span>
+          <h3>Reseller Panel</h3>
+          <p>Dapatkan akses reseller panel untuk menjual kembali layanan hosting sesuai ketentuan yang berlaku — kelola pelanggan kamu sendiri di bawah infrastruktur Hamz Panel.</p>
+          <a href="#contact" class="btn btn-primary">🔥 JOIN RESELLER</a>
+        </div>
+        <div class="reseller-price">
+          <div class="big">Rp40.000</div>
+          <div class="note">Bayar Rp10.000/bulan</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECURITY -->
+  <section id="security" class="pad">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow">// Protection</span>
+        <h2>Security & Infrastructure</h2>
+        <p>Lapisan proteksi dan infrastruktur yang menjaga server kamu tetap stabil dan aman.</p>
+      </div>
+      <div class="sec-grid reveal">
+        <div class="sec-item"><div class="ico">🛡️</div><h4>DDoS Protection</h4></div>
+        <div class="sec-item"><div class="ico">⚡</div><h4>High Speed NVMe</h4></div>
+        <div class="sec-item"><div class="ico">🔐</div><h4>Private Server</h4></div>
+        <div class="sec-item"><div class="ico">🧠</div><h4>Intelligent Protection</h4></div>
+        <div class="sec-item"><div class="ico">☁️</div><h4>VMware Infrastructure</h4></div>
+        <div class="sec-item"><div class="ico">🌐</div><h4>Jakarta Region</h4></div>
+        <div class="sec-item"><div class="ico">⚙️</div><h4>Pterodactyl Official</h4></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PANEL MOCKUP -->
+  <section class="pad">
+    <div class="container panel-wrap">
+      <div class="reveal">
+        <span class="eyebrow">// Dashboard</span>
+        <h2 style="font-family:var(--disp); font-weight:700; font-size:clamp(1.7rem,3vw,2.3rem); margin-bottom:14px;">Powerful Panel.<br>Simple Management.</h2>
+        <p style="color:var(--text-1); max-width:420px;">Kelola server kamu dengan panel yang mudah digunakan, modern, dan powerful.</p>
+      </div>
+      <div class="mockup reveal">
+        <div class="mockup-bar"><i></i><i></i><i></i></div>
+        <div class="mockup-body">
+          <div class="mockup-side">
+            <div class="s active"></div><div class="s"></div><div class="s"></div><div class="s"></div><div class="s"></div>
+          </div>
+          <div class="mockup-main">
+            <div class="mockup-row">
+              <div class="mockup-tile"><div class="bar"></div><div class="val">CPU 42%</div></div>
+              <div class="mockup-tile"><div class="bar"></div><div class="val">RAM 61%</div></div>
+              <div class="mockup-tile"><div class="bar"></div><div class="val">DISK 30%</div></div>
+            </div>
+            <div class="mockup-graph"><svg viewBox="0 0 300 70" preserveAspectRatio="none"><polyline points="0,50 30,40 60,45 90,20 120,35 150,15 180,30 210,10 240,25 270,18 300,8" fill="none" stroke="url(#g)" stroke-width="2"/><defs><linearGradient id="g" x1="0" x2="1"><stop offset="0%" stop-color="#3fd8ff"/><stop offset="100%" stop-color="#8c6bff"/></linearGradient></defs></svg></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROMO -->
+  <section class="pad">
+    <div class="container">
+      <div class="promo reveal">
+        <h3>🔥 PROMO TERBATAS</h3>
+        <p>Ayo order sekarang! Promo terbatas sampai tanggal 10.</p>
+        <div class="countdown" id="countdown">
+          <div class="cd-box"><div class="n" id="cd-d">00</div><div class="l">Hari</div></div>
+          <div class="cd-box"><div class="n" id="cd-h">00</div><div class="l">Jam</div></div>
+          <div class="cd-box"><div class="n" id="cd-m">00</div><div class="l">Menit</div></div>
+          <div class="cd-box"><div class="n" id="cd-s">00</div><div class="l">Detik</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORDER -->
+  <section id="contact" class="pad">
+    <div class="container">
+      <div class="order-box reveal">
+        <h2>🚀 Siap Order?</h2>
+        <p>Pilih paket panel yang sesuai kebutuhan kamu dan langsung hubungi admin.</p>
+        <div class="order-actions">
+          <a href="https://wa.me/qr/AJEQVOZNXXHLD1" target="_blank" rel="noopener" class="btn btn-wa">💬 ORDER VIA WHATSAPP</a>
+          <a href="https://t.me/IlhamMikail" target="_blank" rel="noopener" class="btn btn-tg">✈️ ORDER VIA TELEGRAM</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="foot-inner">
+      <div>
+        <a href="#home" class="logo"><span class="logo-mark">HP</span>HAMZ <span class="accent">PANEL</span></a>
+        <p style="color:var(--text-2); font-size:0.85rem; margin-top:10px;">Premium Panel Hosting Infrastructure</p>
+      </div>
+      <div class="foot-menu">
+        <a href="#home">Home</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#spesifikasi">Spesifikasi</a>
+        <a href="#reseller">Reseller</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Ilham Panel. All Rights Reserved.</span>
+      <span>Jakarta, Indonesia</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// navbar scroll
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 30);
+}, { passive:true });
+
+// mobile menu
+const burger = document.getElementById('burger');
+const menu = document.getElementById('menu');
+burger.addEventListener('click', () => menu.classList.toggle('open'));
+menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.remove('open')));
+
+// reveal on scroll
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold:0.15 });
+revealEls.forEach(el => io.observe(el));
+
+// particles (lightweight, capped count for perf)
+const pWrap = document.getElementById('particles');
+const isSmall = window.innerWidth < 720;
+const count = isSmall ? 16 : 34;
+for (let i=0;i<count;i++){
+  const s = document.createElement('span');
+  const left = Math.random()*100;
+  const dur = 14 + Math.random()*16;
+  const delay = Math.random()*-20;
+  const size = 1 + Math.random()*2;
+  s.style.left = left+'vw';
+  s.style.bottom = '-10px';
+  s.style.width = size+'px';
+  s.style.height = size+'px';
+  s.style.animationDuration = dur+'s';
+  s.style.animationDelay = delay+'s';
+  pWrap.appendChild(s);
+}
+
+// number counters
+const counters = document.querySelectorAll('.stat-num[data-count]');
+const cIo = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const el = entry.target;
+    const target = parseInt(el.dataset.count, 10);
+    const suffix = el.dataset.suffix || '';
+    const dur = 1200;
+    const start = performance.now();
+    function tick(now){
+      const p = Math.min((now-start)/dur, 1);
+      const eased = 1 - Math.pow(1-p, 3);
+      el.textContent = Math.round(eased*target) + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+    cIo.unobserve(el);
+  });
+}, { threshold:0.4 });
+counters.forEach(el => cIo.observe(el));
+
+// countdown to the 10th of current/next month
+function getTargetDate(){
+  const now = new Date();
+  let target = new Date(now.getFullYear(), now.getMonth(), 10, 23, 59, 59);
+  if (target < now) target = new Date(now.getFullYear(), now.getMonth()+1, 10, 23, 59, 59);
+  return target;
+}
+const targetDate = getTargetDate();
+function updateCountdown(){
+  const now = new Date();
+  let diff = targetDate - now;
+  if (diff < 0) diff = 0;
+  const d = Math.floor(diff/(1000*60*60*24));
+  const h = Math.floor((diff/(1000*60*60))%24);
+  const m = Math.floor((diff/(1000*60))%60);
+  const s = Math.floor((diff/1000)%60);
+  const pad = n => String(n).padStart(2,'0');
+  document.getElementById('cd-d').textContent = pad(d);
+  document.getElementById('cd-h').textContent = pad(h);
+  document.getElementById('cd-m').textContent = pad(m);
+  document.getElementById('cd-s').textContent = pad(s);
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+</script>
+
+</body>
+</html>
