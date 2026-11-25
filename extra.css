@@ -1,0 +1,59 @@
+/* ============ Tambahan v2: rack 3D, kalkulator paket, grain ============ */
+body{background:var(--bg);position:relative;isolation:isolate}
+.grain{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.07;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* hero stage */
+.stage{perspective:none;position:relative;min-height:480px;display:flex;justify-content:center;align-items:center}
+.rack3d{position:relative;z-index:1;display:block;width:100%;max-width:560px;aspect-ratio:1/1.02}
+.halo{z-index:0}
+.livecard{position:absolute;right:-1%;bottom:4%;width:min(290px,60%);z-index:4;border-radius:18px;
+  background:rgba(10,15,30,.9);border:1px solid var(--line-2);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  box-shadow:0 30px 70px -25px rgba(0,0,0,.85),0 0 40px -12px rgba(47,107,255,.5);
+  transform:translate(calc(var(--px,0)*-16px),calc(var(--py,0)*-12px));transition:transform .25s ease-out}
+.livecard .rack-top{padding:.6rem .85rem}
+.livecard .rack-body{padding:.65rem;gap:.45rem}
+.livecard .srv{padding:.45rem .6rem;transform:none;gap:.6rem}
+.livecard .srv-ic{width:26px;height:26px;border-radius:8px;font-size:.85rem}
+.livecard .srv-info b{font-size:.76rem}.livecard .srv-info small{font-size:.62rem}
+.livecard .led{display:none}.livecard .srv-st{font-size:.62rem}
+.livecard .rack-chart{transform:none;padding:.55rem .65rem .3rem}
+.livecard .rack-chart canvas{height:46px}
+.chip{transform:translate(calc(var(--px,0)*26px),calc(var(--py,0)*20px));transition:transform .25s ease-out}
+.chip.c1{left:0;right:auto;top:16%;bottom:auto}
+.chip.c2{right:2%;left:auto;top:5%;bottom:auto}
+.chip.c3{left:3%;right:auto;top:auto;bottom:10%}
+@media(max-width:959px){.stage{min-height:0;flex-direction:column}.rack3d{max-width:460px}}
+@media(max-width:560px){
+  .livecard{position:relative;right:auto;bottom:auto;width:100%;margin-top:-1.8rem}
+  .chip.c1{left:0;top:6%}.chip.c2{right:0;top:2%}.chip.c3{left:0;bottom:30%}
+}
+
+/* kalkulator paket */
+.calc{display:grid;gap:2rem;padding:2rem;margin-bottom:1.5rem}
+@media(min-width:820px){.calc{grid-template-columns:1.35fr 1fr;align-items:center;padding:2.2rem 2.4rem}}
+.calc-label{font-weight:600;color:var(--muted);margin-bottom:1.3rem}
+#calcRange{-webkit-appearance:none;appearance:none;width:100%;height:8px;border-radius:99px;outline:none;cursor:pointer;
+  background:linear-gradient(90deg,var(--cobalt),var(--cyan)) 0 0/var(--pct,30%) 100% no-repeat,#141b30}
+#calcRange::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border-radius:50%;background:#fff;border:6px solid var(--cobalt);box-shadow:0 0 0 6px rgba(47,107,255,.25),0 0 24px rgba(0,212,255,.7);transition:transform .2s}
+#calcRange::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#fff;border:6px solid var(--cobalt);box-shadow:0 0 0 6px rgba(47,107,255,.25),0 0 24px rgba(0,212,255,.7)}
+#calcRange:active::-webkit-slider-thumb{transform:scale(1.15)}
+.ticks{display:flex;justify-content:space-between;gap:2px;margin-top:1rem}
+.tick{flex:1;min-width:0;background:none;border:0;color:var(--dim);font:600 .78rem var(--body);cursor:pointer;padding:.35rem 0;border-radius:8px;transition:color .25s,background .25s}
+.tick:hover{color:#fff}.tick.on{color:#fff;background:rgba(47,107,255,.3)}
+.calc-r{padding:1.5rem;border-radius:16px;background:rgba(0,0,0,.3);border:1px solid var(--line)}
+.calc-name{color:var(--muted);font-weight:600}
+.calc-price{font-family:var(--head);font-weight:800;font-size:clamp(2.4rem,6vw,3.5rem);letter-spacing:-.035em;line-height:1.1;margin:.2rem 0}
+.calc-price.pop{animation:pop .5s var(--ease)}
+@keyframes pop{from{transform:scale(.88);opacity:.35}}
+.calc-dur{font-size:.8rem;color:var(--dim);margin-bottom:1.2rem}
+.calc-r .btn{width:100%}
+.plan{cursor:pointer}
+.plan.sel{border-color:rgba(88,184,255,.55);box-shadow:0 0 0 1px rgba(88,184,255,.45),0 24px 60px -25px rgba(47,107,255,.65)}
+
+/* v2.1: livecard lebih ringkas agar rack 3D tetap terlihat */
+.livecard{width:min(230px,52%);right:-3%;bottom:-2%}
+.livecard .srv-info small{display:none}
+.livecard .srv:nth-child(3){display:none}
+.livecard .rack-chart canvas{height:40px}
+@media(max-width:560px){.livecard{width:100%;right:auto;bottom:auto}.livecard .srv:nth-child(3){display:flex}}
